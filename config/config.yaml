@@ -1,0 +1,13 @@
+
+LINEAR_REG : 
+  MODEL_NAME : "linear_reg"
+  MODEL_TYPE : "regression"
+  MODEL_PARAMS : 
+    fit_intercept : True
+    normalize : False
+    copy_X : True
+    n_jobs : None
+    TARGET : "charges"
+    FEATURES : ["age", "bmi", "children", "smoker", "region"]
+
+  PLOTS : False
