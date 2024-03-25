@@ -11,3 +11,57 @@ LINEAR_REG :
     FEATURES : ["age", "bmi", "children", "smoker", "region"]
 
   PLOTS : False
+
+XGBOOST_REG : 
+  MODEL_NAME : "xgboost_reg"
+  MODEL_TYPE : "regression"
+  PARAM_GRID : {
+                'colsample_bytree': [0.3, 0.7],
+                'learning_rate': [0.01, 0.1],
+                'max_depth': [3, 5],
+                'alpha': [10, 50],
+                'n_estimators': [100, 200],
+                'subsample': [0.5, 0.8],
+                'gamma': [0, 10],
+                'min_child_weight': [1, 5],
+                'lambda': [10, 50],
+              }
+  MODEL_PARAMS:
+    N_ITER : 10
+    N_SPLITS : 5
+    VERBOSE : 1
+    TARGET : "PRICE"
+    FEATURES : ['SUBURB','BEDROOMS', 'BATHROOMS', 'GARAGE',
+       'LAND_AREA', 'FLOOR_AREA', 'BUILD_YEAR', 'CBD_DIST', 'NEAREST_STN',
+       'NEAREST_STN_DIST', 'DATE_SOLD', 'POSTCODE',
+       'NEAREST_SCH', 'NEAREST_SCH_RANK']
+  PLOTS : False
+  ML_FLOW : False
+
+RANDOMFOREST_CLF : 
+  MODEL_NAME : "randomforest_clf"
+  MODEL_TYPE : "classification"
+  PARAM_GRID : {
+    'n_estimators': [100, 500, 1000],
+    'max_depth': [10, 50, 100, None],
+    'min_samples_split': [2, 5],
+    'min_samples_leaf': [1, 2],
+    'bootstrap': [True, False],
+    'criterion': ['gini', 'entropy']
+}
+  MODEL_PARAMS:
+    N_ITER : 10
+    N_SPLITS : 5
+    VERBOSE : 1
+    N_ESTIMATORS : 100
+    TARGET : "diagnosis"
+    FEATURES : ['radius_mean', 'texture_mean', 'perimeter_mean', 'area_mean',
+       'smoothness_mean', 'compactness_mean', 'concavity_mean',
+       'concave points_mean', 'symmetry_mean', 'fractal_dimension_mean',
+       'radius_se', 'texture_se', 'perimeter_se', 'area_se', 'smoothness_se',
+       'compactness_se', 'concavity_se', 'concave points_se', 'symmetry_se',
+       'fractal_dimension_se', 'radius_worst', 'texture_worst',
+       'perimeter_worst', 'area_worst', 'smoothness_worst',
+       'compactness_worst', 'concavity_worst', 'concave points_worst',
+       'symmetry_worst', 'fractal_dimension_worst']
+  PLOTS : False

@@ -21,9 +21,10 @@ with open('config/config.yaml', 'r') as file:
 df = load_data('./data/medical_insurance.csv')
 
 
-# Preprocessing
-# These functions would normally be in a separate file, but I'm including them here for simplicity and readability
-# I'm also using the StandardScaler from scikit-learn, which is a bit more convenient than the statsmodels version
+# Keeping all code in a class is not necessary, but it's a good practice to keep the code organized
+# This way, you can easily see which functions are related to each other
+# This is also usefull to get more familiar with OOP
+
 
 class LinearReg:
     def __init__(self):
@@ -31,7 +32,10 @@ class LinearReg:
         self.TARGET = config['LINEAR_REG']['MODEL_PARAMS']['TARGET']
         self.FEATURES = config['LINEAR_REG']['MODEL_PARAMS']['FEATURES']
         self.logger = logging.getLogger(__name__)
-        
+    
+    # Preprocessing
+    # These functions would normally be in a separate file, but I'm including them here for simplicity and readability
+    # I'm also using the StandardScaler from scikit-learn, which is a bit more convenient than the statsmodels version
 
     def preprocess_data(self, df):
         """
