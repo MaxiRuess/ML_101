@@ -43,7 +43,7 @@ RANDOMFOREST_CLF :
   MODEL_TYPE : "classification"
   PARAM_GRID : {
     'n_estimators': [100, 500, 1000],
-    'max_depth': [10, 50, 100, None],
+    'max_depth': [10, 50, 100],
     'min_samples_split': [2, 5],
     'min_samples_leaf': [1, 2],
     'bootstrap': [True, False],
@@ -64,4 +64,4 @@ RANDOMFOREST_CLF :
        'perimeter_worst', 'area_worst', 'smoothness_worst',
        'compactness_worst', 'concavity_worst', 'concave points_worst',
        'symmetry_worst', 'fractal_dimension_worst']
-  PLOTS : False
+  PLOT : True
