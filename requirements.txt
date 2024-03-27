@@ -7,3 +7,9 @@ pyyaml
 xgboost
 streamlit
 mlflow
+torch
+mlxtend
+tqdm
+torchmetrics
+torch
+torchinfo
