@@ -292,7 +292,13 @@ def load_model(model, model_dir):
     return model
 
 # Set seeds
+set_seed(42)
 
-
+try: 
+    device = set_device()
+    logger.info(f'Device set to {device}')
+except Exception as e:
+    logger.error(e)
+    
 tiny_vgg = TinyVGG(input_shape = 3, hidden_units = 32, output_shape = 2)
 model_summary(tiny_vgg, input_size = (1, 3, 64, 64))
