@@ -65,3 +65,21 @@ RANDOMFOREST_CLF :
        'compactness_worst', 'concavity_worst', 'concave points_worst',
        'symmetry_worst', 'fractal_dimension_worst']
   PLOT : True
+
+
+TINYVGG_CLF : 
+  MODEL_NAME : "tinyvgg_clf"
+  MODEL_TYPE : "image_classification"
+  PARAMS : 
+    BATCH_SIZE : 32
+    EPOCHS : 10
+    LEARNING_RATE : 0.01
+    TEST_DIR : "./data/image_classification/test"
+    TRAIN_DIR : "./data/image_classification/train"
+    IMG_SIZE : [64, 64]
+    HIDDEN_UNITS : 32
+    MODEL_DIR : "./models"
+  TRAIN : False
+
+
+

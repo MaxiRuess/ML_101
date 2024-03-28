@@ -47,7 +47,7 @@ def set_device():
     
     return device
 
-def create_dataloader(train_dir, test_dir, batch_size, num_workers, img_size): 
+def create_dataloader(train_dir, test_dir, batch_size, img_size): 
     """
     This function creates a DataLoader object for the train and test datasets
     
@@ -62,9 +62,9 @@ def create_dataloader(train_dir, test_dir, batch_size, num_workers, img_size):
     
     train_transforms = transforms.Compose([
         transforms.Resize(size = img_size),
-        transforms.RandomHorizontalFlip(ü = 0.5),
+        transforms.RandomHorizontalFlip(p= 0.5),
         transforms.RandomRotation(degrees = 45),
-        transforms.RandomresizedCrop(size = img_size, scale = (0.8, 1.0)),
+        transforms.RandomResizedCrop(size = img_size, scale = (0.8, 1.0)),
         transforms.ToTensor(),
         transforms.Normalize(mean = [0.485, 0.456, 0.406], std = [0.229, 0.224, 0.225])
     ])
@@ -79,8 +79,8 @@ def create_dataloader(train_dir, test_dir, batch_size, num_workers, img_size):
     
     class_names = train_dataset.classes
     
-    train_dataloader = DataLoader(train_dataset, batch_size = batch_size, shuffle = True, num_workers = num_workers)
-    test_dataloader = DataLoader(test_dataset, batch_size = batch_size, shuffle = False, num_workers = num_workers)
+    train_dataloader = DataLoader(train_dataset, batch_size = batch_size, shuffle = True)
+    test_dataloader = DataLoader(test_dataset, batch_size = batch_size, shuffle = False)
     
     return train_dataloader, test_dataloader, class_names
 
@@ -97,12 +97,14 @@ def show_img(test_dataloader, class_names):
     
     plt.imshow(img.permute(1, 2, 0))
     plt.title(class_names[label.item()])
+    plt.show()
     
     
 class TinyVGG(nn.Module):
-  def __init__(self, input_shape, hidden_units, output_shape):
-    super().__init__()
-    self.conv_1 = nn.Sequential(
+    
+    def __init__(self, input_shape, hidden_units, output_shape):
+        super().__init__()
+        self.conv_1 = nn.Sequential(
         nn.Conv2d(in_channels = input_shape,out_channels = hidden_units,
                   kernel_size = 2, stride = 1, padding = 0),
         nn.ReLU(),
@@ -111,7 +113,7 @@ class TinyVGG(nn.Module):
         nn.ReLU(),
         nn.MaxPool2d(kernel_size = 2, stride = 2)
         )
-    self.conv_2 = nn.Sequential(
+        self.conv_2 = nn.Sequential(
         nn.Conv2d(in_channels = hidden_units, out_channels = hidden_units,
                   kernel_size = 2, stride = 1, padding = 0),
         nn.ReLU(),
@@ -123,31 +125,40 @@ class TinyVGG(nn.Module):
         nn.ReLU(),
         nn.MaxPool2d(kernel_size = 2, stride = 2)
         )
-    self.classifier = nn.Sequential(
+        self.classifier = nn.Sequential(
         nn.Flatten(),
         nn.Linear(in_features = hidden_units* 13*13, out_features = output_shape)
     )
- 
+        
     def forward(self, x):
-        x = self.conv1(x)
+        x = self.conv_1(x)
         x = self.conv_2(x)
         return self.classifier(x)
 
 
-def model_summary(model, input_size):
+def create_summary(model: torch.nn.Module, input_size: tuple):
     """
-    This function prints the summary of the model
+    Create a summary of the model
     
-    Parameters
-    ----------
-    model: nn.Module
+    Args:
+    model: torch.nn.Module
+        Model to be summarized
     input_size: tuple
+        Size of the input tensor
+    device: torch.device
+        Device to be used for the summary
+        
+    Returns:
+    summary: str
+        Summary of the model
     """
-    
-    summary(model, input_size = input_size, 
-            col_names = ['input_size', 'output_size', 'num_params', 'trainable'],
-            col_width = 16,
-            row_settings = ("var_names"))
+
+    return summary(model = model, 
+                   input_size = input_size, 
+                   col_names= ['input_size','output_size', 'num_params', 'trainable'],
+                   col_width= 16,
+                   row_settings= ['var_names']
+                    )
 
 
 def train(model, train_dataloader, test_dataloader, epochs, criterion, optimizer, device, scheduler = None):
@@ -194,7 +205,7 @@ def train(model, train_dataloader, test_dataloader, epochs, criterion, optimizer
         logger.info(f'Epoch: {epoch} Training Loss: {epoch_loss}, Training Accuracy: {epoch_acc}')
         
         model.eval()
-        test_loss, train_acc = 0.0, 0.0
+        test_loss, test_acc = 0.0, 0.0
         
         for batch, (inputs, labels) in enumerate(test_dataloader):
             inputs, labels = inputs.to(device), labels.to(device)
@@ -245,7 +256,7 @@ def confusion_matrix(model, test_dataloader, class_names, device):
     y_preds = torch.cat(y_preds, dim=0)
     
     test_truth = torch.cat([labels for _, labels in test_dataloader], dim=0)
-    confmat = ConfusionMatrix(num_classes = len(class_names, task = 'multiclass'))
+    confmat = ConfusionMatrix(num_classes = len(class_names), task = 'multiclass')
     
     confmat_tensor = confmat(y_preds, test_truth)
     
@@ -267,8 +278,8 @@ def save_model(model, model_dir):
     
     model_path = Path(model_dir)
     model_path.mkdir(parents = True, exist_ok = True)
-    
-    torch.save(model.state_dict(), model_path / 'model.pth')
+    model_name = "tiny_vgg.pth"
+    torch.save(model.state_dict(), model_path / model_name)
     
     logger.info(f'Model saved at {model_path}')
     
@@ -285,7 +296,7 @@ def load_model(model, model_dir):
     
     model_path = Path(model_dir)
     
-    model.load_state_dict(torch.load(model_path / 'model.pth'))
+    model.load_state_dict(torch.load(model_path / 'tiny_vgg.pth'))
     
     logger.info(f'Model loaded from {model_path}')
     
@@ -294,11 +305,66 @@ def load_model(model, model_dir):
 # Set seeds
 set_seed(42)
 
+# Set device
 try: 
     device = set_device()
     logger.info(f'Device set to {device}')
 except Exception as e:
     logger.error(e)
     
-tiny_vgg = TinyVGG(input_shape = 3, hidden_units = 32, output_shape = 2)
-model_summary(tiny_vgg, input_size = (1, 3, 64, 64))
+# Setup the dataloaders and class names 
+try:
+    train_dataloader, test_dataloader, class_names = create_dataloader(train_dir = config['TINYVGG_CLF']['PARAMS']['TRAIN_DIR'],
+                                                                   test_dir = config['TINYVGG_CLF']['PARAMS']['TEST_DIR'],
+                                                                   batch_size= config['TINYVGG_CLF']['PARAMS']['BATCH_SIZE'],
+                                                                    img_size= (64, 64))
+except Exception as e:
+    logger.error(f'Error in creating dataloader: {e}')
+
+try:
+    tiny_vgg = TinyVGG(input_shape = 3, hidden_units = 32, output_shape = len(class_names))
+except Exception as e:
+    logger.error(f'Error in creating model: {e}')
+
+# Train model if config['TINYVGG_CLF']['TRAIN'] is True
+# Otherwise go directly to loading the model
+# Normally you would have a separate script for training and loading the model
+
+if config['TINYVGG_CLF']['TRAIN']:
+    try: 
+        criterion = nn.CrossEntropyLoss()
+        optimizer = optim.Adam(tiny_vgg.parameters(), lr=0.001)
+        scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=7, gamma=0.1)
+
+        model, results = train(model= tiny_vgg,train_dataloader= train_dataloader, test_dataloader= test_dataloader, 
+            epochs= config['TINYVGG_CLF']['PARAMS']['EPOCHS'], 
+            criterion= criterion, optimizer= optimizer, device= device, scheduler= scheduler)
+        logger.info(f"Model training results: {results}")
+        
+    except Exception as e:
+        logger.error(f'Error in training model: {e}')
+    
+    try:
+        save_model(model= tiny_vgg, model_dir= config['TINYVGG_CLF']['PARAMS']['MODEL_DIR'])
+    except Exception as e:
+        logger.error(f'Error in saving model: {e}')
+    
+
+try: 
+    tiny_vgg = load_model(model= tiny_vgg, model_dir= config['TINYVGG_CLF']['PARAMS']['MODEL_DIR'])
+except Exception as e:
+    logger.error(f'Error in loading model: {e}')
+    
+
+
+    
+
+
+    
+    
+
+
+
+
+
+    
