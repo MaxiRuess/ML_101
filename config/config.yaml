@@ -66,6 +66,24 @@ RANDOMFOREST_CLF :
        'symmetry_worst', 'fractal_dimension_worst']
   PLOT : True
 
+RANDOMFOREST_REG : 
+  MODEL_NAME : "randomforest_reg"
+  MODEL_TYPE : "regression"
+  PARAM_GRID : {
+    'n_estimators': [100, 500, 1000],
+    'max_depth': [10, 50, 100],
+    'min_samples_split': [2, 5],
+    'min_samples_leaf': [1, 2],
+    'bootstrap': [True, False],
+    'criterion': ['mse', 'mae']
+}
+  MODEL_PARAMS:
+    N_ITER : 10
+    N_SPLITS : 5
+    VERBOSE : 1
+    N_ESTIMATORS : 100
+    TARGET : "PRICE"
+  PLOT : True
 
 TINYVGG_CLF : 
   MODEL_NAME : "tinyvgg_clf"

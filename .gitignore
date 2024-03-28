@@ -153,5 +153,7 @@ cython_debug/
 
 
 # mlflow
-
 notebooks/mlruns/
+
+# models
+models/
