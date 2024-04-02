@@ -25,18 +25,15 @@ This Repo is a work in progress and I will continously update it with more Noteb
 ### Regression 
 
 - LinearRegression (OLS)
-- Gradient Boosting (XGBoost)
+- Gradient Boosting Regressor (XGBoost)
+- Random Forest Regressor
 
 ### Classification 
 
 - Random Forest Classifier
+- Gradient Boosting Classifier (XGBoost)
 
 
-### Image Classifcation 
+### Reinforcement Learning
 
-- Tiny VGG (Pytorch from Scratch)
-- Pretrained Models 
-    - AlexNet
-
-
-### Natural Language Processing 
+- Q-Learning
