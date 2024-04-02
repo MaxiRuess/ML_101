@@ -254,7 +254,7 @@ class CustomRandomForestClassifier:
         return fig
     
     
-    # Initialize the model
+# Initialize the model
 model_rfc = CustomRandomForestClassifier()
 
     
@@ -262,6 +262,9 @@ model_rfc = CustomRandomForestClassifier()
 # I'm using try except block to catch any error that might occur during the training process
 # This is to ensure that the error is logged and the pipeline does not break
 # This also makes it easier to debug the error
+# This could also be summarised ina single function that calls all the other functions 
+# This function could be called in the main function
+
 try: 
     X,y = model_rfc.preprocessing(df)
 except Exception as e:
