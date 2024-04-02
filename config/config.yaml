@@ -70,19 +70,23 @@ RANDOMFOREST_REG :
   MODEL_NAME : "randomforest_reg"
   MODEL_TYPE : "regression"
   PARAM_GRID : {
-    'n_estimators': [100, 500, 1000],
-    'max_depth': [10, 50, 100],
-    'min_samples_split': [2, 5],
-    'min_samples_leaf': [1, 2],
-    'bootstrap': [True, False],
-    'criterion': ['mse', 'mae']
-}
+    'n_estimators': [100, 200, 300, 400, 500],
+    'max_features': ['sqrt', 'log2'],
+    'max_depth': [10, 20, 30, 40, 50],
+    'min_samples_split': [2, 5, 10],
+    'min_samples_leaf': [1, 2, 4]
+
+      }
   MODEL_PARAMS:
     N_ITER : 10
-    N_SPLITS : 5
+    N_SPLITS : 3
     VERBOSE : 1
-    N_ESTIMATORS : 100
-    TARGET : "PRICE"
+    TARGET : "price"
+    FEATURES : ['symboling', 'fueltype', 'aspiration',
+       'doornumber', 'carbody', 'drivewheel', 'enginelocation', 'wheelbase',
+       'carlength', 'carwidth', 'carheight', 'curbweight', 'enginetype',
+       'cylindernumber', 'enginesize', 'fuelsystem', 'boreratio', 'stroke',
+       'compressionratio', 'horsepower', 'peakrpm', 'citympg', 'highwaympg']
   PLOT : True
 
 TINYVGG_CLF : 

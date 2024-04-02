@@ -26,7 +26,7 @@ This Repo is a work in progress and I will continously update it with more Noteb
 
 - LinearRegression (OLS)
 - Gradient Boosting Regressor (XGBoost)
-- Random Forest Regressor
+- Random Forest Regressor (Build with Streamlit as an endpoint)
 
 ### Classification 
 
