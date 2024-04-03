@@ -9,9 +9,12 @@ All Models have a
 The Repo starts of very simple with LinearRegression and progressivly gets more advanced. 
 I'm trying explain the Algorithms as best as possible. Many of the text here have been written with help from ChatGPT. 
 
-You can use the code with the supplied datasets but I've also tried to make the code modular and unviersal applicable to other datasets. (There are some limitations with this especially with Preprocessing the data). The only place where changes are required are in the YAML Config file. I've set it up this way so you can limit the specific what columns you want to include as features
+You can use the code with the supplied datasets but I've also tried to make the code modular and unviersal applicable to other datasets. (There are some limitations with this, especially with Preprocessing the data). The only place where changes are required are in the YAML Config file. I've set it up this way so you can limit what columns you want to include as features. 
 
-This Repo is a work in progress and I will continously update it with more Notebooks and Scripts
+I'm building this Repo as part of my portfolio but also as a contionous learning project. If you spot any erros or have suggestions for the repo or specific algorthims or notebooks please don't hesitate to reach out. 
+
+This Repo is a work in progress and I will continously update it with more Notebooks and Scripts. 
+I'm also working on a similar Repo for DeepLearning Algorithms which I will release soon. 
 
 ## Instructions 
 
@@ -20,7 +23,7 @@ This Repo is a work in progress and I will continously update it with more Noteb
 3. If you're using other datasets, you need to adjust the Features and Target variable in the YAML file. 
 4. In the `config.yaml` file you can also adjust the hyperparamters 
 
-##Current Models: 
+## Current Models: 
 
 ### Regression 
 
@@ -34,6 +37,4 @@ This Repo is a work in progress and I will continously update it with more Noteb
 - Gradient Boosting Classifier (XGBoost)
 
 
-### Reinforcement Learning
 
-- Q-Learning
