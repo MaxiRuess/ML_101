@@ -11,7 +11,7 @@ I'm trying explain the Algorithms as best as possible. Many of the text here hav
 
 You can use the code with the supplied datasets but I've also tried to make the code modular and unviersal applicable to other datasets. (There are some limitations with this, especially with Preprocessing the data). The only place where changes are required are in the YAML Config file. I've set it up this way so you can limit what columns you want to include as features. 
 
-I'm building this Repo as part of my portfolio but also as a contionous learning project. If you spot any erros or have suggestions for the repo or specific algorthims or notebooks please don't hesitate to reach out. 
+I'm building this Repo as part of my portfolio but also as a contionous learning project. If you spot any errors or have suggestions for the repo or specific algorthims or notebooks please don't hesitate to reach out. 
 
 This Repo is a work in progress and I will continously update it with more Notebooks and Scripts. 
 I'm also working on a similar Repo for DeepLearning Algorithms which I will release soon. 
