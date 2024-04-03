@@ -8,3 +8,5 @@ xgboost
 streamlit
 mlflow
 seaborn
+matplotlib
+folium

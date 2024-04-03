@@ -149,7 +149,15 @@ class LinearReg:
         
         return fig
 
+
+# Initalizing Model 
 linear_reg  = LinearReg()
+
+
+
+# This is the main part of the script
+# These functions could also be summarized in a single function, but I'm keeping them separate for readability
+# I'm also using try-except blocks to catch any errors that might occur, this makes it easier to debug the code
 
 try: 
     X, y, X_scaler, y_scaler = linear_reg.preprocess_data(df)
